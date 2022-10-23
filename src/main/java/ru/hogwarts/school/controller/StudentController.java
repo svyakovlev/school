@@ -22,9 +22,9 @@ public class StudentController {
         return ResponseEntity.ok(createdStudent);
     }
 
-    @GetMapping("{studentId}")
-    public ResponseEntity readStudent(@PathVariable Long studentId) {
-        Student student = studentService.readStudent(studentId);
+    @GetMapping("{id}")
+    public ResponseEntity readStudent(@PathVariable Long id) {
+        Student student = studentService.readStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
@@ -37,9 +37,9 @@ public class StudentController {
         return ResponseEntity.ok(updatedStudent);
     }
 
-    @DeleteMapping("{studentId}")
-    public Student deleteStudent(@PathVariable Long studentId) {
-        return studentService.deleteStudent(studentId);
+    @DeleteMapping("{id}")
+    public Student deleteStudent(@PathVariable Long id) {
+        return studentService.deleteStudent(id);
     }
 
     @GetMapping("{age}")
