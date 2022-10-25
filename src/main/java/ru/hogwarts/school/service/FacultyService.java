@@ -1,40 +1,42 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
-    private final Map<Long, Faculty> faculties = new HashMap<>();
-    private long facultyId = 1;
+    @Autowired
+    private final FacultyRepository facultyRepository;
+
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
+
 
     public Faculty createFaculty(Faculty faculty) {
-        faculties.put(facultyId, faculty);
-        facultyId++;
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
-    public Faculty readFaculty(long facultyId) {
-        return faculties.get(facultyId);
+    public Faculty readFaculty(long id) {
+        return facultyRepository.findById(id).get();
     }
 
-    public Faculty updateFaculty(long facultyId, Faculty faculty) {
-        faculties.put(facultyId, faculty);
-        return faculty;
+    public Faculty updateFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
-    public Faculty deleteFaculty(long facultyId) {
-        return faculties.remove(facultyId);
+    public void deleteFaculty(long id) {
+        facultyRepository.deleteById(id);
     }
 
-    public Map<Long, Faculty> filterFacultyByColor(String color) {
-        return faculties.entrySet().stream()
-                .filter(e -> e.getValue().getColor() == color)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public List<Faculty> filterFacultyByColor(String color) {
+        return facultyRepository.findAll().stream()
+                .filter(e -> e.getColor() == color)
+                .collect(Collectors.toList());
     }
 }
