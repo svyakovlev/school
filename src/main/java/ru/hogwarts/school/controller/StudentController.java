@@ -43,7 +43,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{age}")
+    @GetMapping("/age/{age}")
     public List<Student> filterStudentsByColor(@PathVariable int age) {
         return studentService.filterStudentsByAge(age);
     }

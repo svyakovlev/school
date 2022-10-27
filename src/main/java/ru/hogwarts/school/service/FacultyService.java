@@ -23,7 +23,7 @@ public class FacultyService {
     }
 
     public Faculty readFaculty(long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow();
     }
 
     public Faculty updateFaculty(Faculty faculty) {
@@ -36,7 +36,7 @@ public class FacultyService {
 
     public List<Faculty> filterFacultyByColor(String color) {
         return facultyRepository.findAll().stream()
-                .filter(e -> e.getColor() == color)
+                .filter(e -> e.getColor().equals(color))
                 .collect(Collectors.toList());
     }
 }
