@@ -13,6 +13,11 @@ public class Faculty {
 
     @OneToMany(mappedBy = "faculty")
     private Collection<Student> students;
+
+//    public Collection<Student> getStudents() {
+//        return students;
+//    }
+
     public Long getId() {
         return id;
     }

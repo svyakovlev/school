@@ -44,8 +44,12 @@ public class StudentService {
         return studentRepository.findByAgeBetween(min, max);
     }
 
-    public List<Student> findStudentByFacultyId(Long id) {
-        return studentRepository.findStudentByFaculty_Id(id);
+    public List<Student> findStudentsByFacultyId(Long id) {
+        return studentRepository.findStudentsByFacultyId(id);
+    }
+
+    public Faculty findFacultyByStudentId(Long id) {
+        return studentRepository.findStudentById(id).getFaculty();
     }
 
 }
