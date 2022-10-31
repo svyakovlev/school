@@ -15,6 +15,10 @@ public class Student {
     @JoinColumn(name = "facultyId")
     private Faculty faculty;
 
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
     public Long getId() {
         return id;
     }
