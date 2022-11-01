@@ -52,4 +52,7 @@ public class StudentService {
         return studentRepository.findStudentById(id).getFaculty();
     }
 
+    public Student getById(Long studentId) {
+        return studentRepository.findStudentById(studentId);
+    }
 }
