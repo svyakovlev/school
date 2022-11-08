@@ -2,8 +2,10 @@ package ru.hogwarts.school.controller;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,6 +17,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.FacultyService;
+import ru.hogwarts.school.service.StudentService;
 
 import java.util.Optional;
 
@@ -22,7 +25,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(controllers = FacultyController.class)
+@ExtendWith(MockitoExtension.class)
 public class FacultyControllerTest {
 
     @Autowired
@@ -49,6 +53,7 @@ public class FacultyControllerTest {
 
 
         JSONObject facultyObject = new JSONObject();
+        facultyObject.put("id", id);
         facultyObject.put("name", name);
         facultyObject.put("color", color);
 
@@ -80,6 +85,7 @@ public class FacultyControllerTest {
 
 
         JSONObject facultyObject = new JSONObject();
+        facultyObject.put("id", id);
         facultyObject.put("name", name);
         facultyObject.put("color", color);
 
