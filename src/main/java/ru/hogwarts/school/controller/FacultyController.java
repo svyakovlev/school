@@ -50,9 +50,4 @@ public class FacultyController {
                                              @RequestParam(required = false) String color) {
         return facultyService.filterByNameOrColor(name, color);
     }
-
-//    @GetMapping("/findFacultyByStudentId")
-//    public Faculty findFacultyByStudentId(@RequestParam Long id) {
-//        return studentService;
-//    }
 }
