@@ -36,9 +36,6 @@ public class FacultyControllerTest {
     private FacultyRepository facultyRepository;
 
     @SpyBean
-    private AvatarService avatarService;
-
-    @SpyBean
     private FacultyService facultyService;
 
     @InjectMocks
@@ -99,6 +96,38 @@ public class FacultyControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/" + id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
+    }
+
+    @Test
+    public void updateFacultyTest() throws Exception{
+
+        final long id = 5L;
+        final String name = "facultyTestName";
+        final String color = "facultyTestColor";
+
+
+        JSONObject facultyObject = new JSONObject();
+        facultyObject.put("id", id);
+        facultyObject.put("name", name);
+        facultyObject.put("color", color);
+
+        Faculty faculty = new Faculty();
+        faculty.setId(id);
+        faculty.setName(name);
+        faculty.setColor(color);
+
+        when(facultyRepository.save(ArgumentMatchers.any(Faculty.class))).thenReturn(faculty);
+        when(facultyRepository.findById(ArgumentMatchers.any(Long.class))).thenReturn(Optional.of(faculty));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/faculty")
+                        .content(facultyObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
