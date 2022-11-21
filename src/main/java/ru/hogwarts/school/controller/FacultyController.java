@@ -50,4 +50,14 @@ public class FacultyController {
                                              @RequestParam(required = false) String color) {
         return facultyService.filterByNameOrColor(name, color);
     }
+
+    @GetMapping("/longestName")
+    public String findLongestFacultyName() {
+        return facultyService.findLongestFacultyName();
+    }
+
+    @GetMapping("/returnIntegerValue")
+    public Integer returnIntegerValue() {
+        return facultyService.returnIntegerValue();
+    }
 }
