@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,5 +102,53 @@ public class StudentService {
                 .stream()
                 .collect(Collectors.averagingInt(Student::getAge));
         return averageStudentAge;
+    }
+
+    public void thread() {
+        List<String> studentsNameList = new ArrayList<>();
+        for (long i = 1; i <= 6; i++) {
+            studentsNameList.add(studentRepository.findStudentById(i).getName());
+        }
+
+        printStudentsName(studentsNameList.get(0));
+        printStudentsName(studentsNameList.get(1));
+
+        new Thread(() -> {
+            printStudentsName(studentsNameList.get(2));
+            printStudentsName(studentsNameList.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printStudentsName(studentsNameList.get(4));
+            printStudentsName(studentsNameList.get(5));
+        }).start();
+    }
+
+    public void threadSynchronized() {
+        List<String> studentsNameList = new ArrayList<>();
+        for (long i = 1; i <= 6; i++) {
+            studentsNameList.add(studentRepository.findStudentById(i).getName());
+        }
+
+        printStudentsNameSynchronized(studentsNameList.get(0));
+        printStudentsNameSynchronized(studentsNameList.get(1));
+
+        new Thread(() -> {
+            printStudentsNameSynchronized(studentsNameList.get(2));
+            printStudentsNameSynchronized(studentsNameList.get(3));
+        }).start();
+
+        new Thread(() -> {
+            printStudentsNameSynchronized(studentsNameList.get(4));
+            printStudentsNameSynchronized(studentsNameList.get(5));
+        }).start();
+    }
+
+    public void printStudentsName(String name) {
+        System.out.println(name);
+    }
+
+    public synchronized void printStudentsNameSynchronized(String name) {
+        System.out.println(name);
     }
 }
