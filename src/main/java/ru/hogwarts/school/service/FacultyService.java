@@ -9,8 +9,11 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
@@ -56,4 +59,25 @@ public class FacultyService {
         return facultyRepository.findFacultiesByNameIgnoreCaseOrColorIgnoreCase(name, color);
     }
 
+    public String findLongestFacultyName() {
+        return facultyRepository.findAll().stream()
+                .max(Comparator.comparingInt(f -> f.getName().length()))
+                .map(Faculty::getName)
+                .toString();
+    }
+
+    public Integer returnIntegerValue() {
+//        int sum = Stream
+//                .iterate(1, a -> a + 1)
+//                .limit(1_000_000)
+//                .reduce(0, Integer::sum);
+//        Необходимо придумать способ уменьшить время ответа эндпоинта путем модификации вышеописанного выражения.
+
+        int sum = 0;
+        for (int i = 1; i <= 1_000_000; i++) {
+            sum = sum + i;
+        }
+
+        return sum;
+    }
 }
